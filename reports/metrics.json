@@ -1,0 +1,813 @@
+{
+  "calibration": {
+    "linear": {
+      "alpha": 0.1,
+      "n": 720,
+      "radius_minutes": 7.358857467616659,
+      "rank": 649,
+      "status": "finite"
+    },
+    "xgboost": {
+      "alpha": 0.1,
+      "n": 720,
+      "radius_minutes": 5.524911434570313,
+      "rank": 649,
+      "status": "finite"
+    }
+  },
+  "counts": {
+    "calibration": 720,
+    "embargo_excluded": 720,
+    "test": 1800,
+    "train": 3240
+  },
+  "dataset": {
+    "compressed_bytes": 300146,
+    "csv_sha256": "d405b5b4ae9b89e272ce7cc48ba5ac40bfc0b9b0a5a9d2327363830220944dc3",
+    "days": 36,
+    "events_per_day": 180,
+    "gzip_sha256": "cc039b4f58b3339302e53dd70edeafbc2efc991777e22d6d5c5988af1961de7e",
+    "rows": 6480,
+    "seed": 73
+  },
+  "parameters": {
+    "colsample_bytree": 1.0,
+    "device": "cpu",
+    "learning_rate": 0.06,
+    "max_bin": 128,
+    "max_depth": 4,
+    "min_child_weight": 10,
+    "n_estimators": 180,
+    "n_jobs": 1,
+    "objective": "reg:squarederror",
+    "random_state": 73,
+    "reg_lambda": 3.0,
+    "subsample": 1.0,
+    "tree_method": "hist"
+  },
+  "protocol": {
+    "calibration_as_of_day": 26,
+    "calibration_days": "[20,24)",
+    "coverage_claim": "exchangeability is required for the usual marginal guarantee; time drift violates it",
+    "features": [
+      "distance_km",
+      "traffic_index",
+      "load_ratio",
+      "available_couriers",
+      "rain",
+      "basket_items",
+      "hour_sin",
+      "hour_cos",
+      "weekend",
+      "zone_core",
+      "zone_hills"
+    ],
+    "features_available": "before dispatch",
+    "identity_disjoint": [
+      "route_id",
+      "courier_id"
+    ],
+    "interval_method": "absolute-residual split conformal with ceil((n+1)*(1-alpha)) order statistic",
+    "mechanism_shift_day": 31,
+    "model_selection": "fixed parameters; no search, early stopping, or calibration/test fitting",
+    "policy_loss": {
+      "late_minute_weight": 4,
+      "slack_minute_weight": 1,
+      "units": "illustrative simulation units, not money"
+    },
+    "test_days": "[26,36)",
+    "train_days": "[0,18)",
+    "training_fit_as_of_day": 20
+  },
+  "runtime": {
+    "device": "cpu",
+    "numpy": "1.26.0",
+    "platform": "Windows",
+    "python": "3.11.9",
+    "xgboost": "3.1.2",
+    "xgboost_threads": 1
+  },
+  "schema_version": 1,
+  "scope": "original synthetic delivery simulation; no company/customer data or production claim",
+  "source_sha256": {
+    "dispatch_eta/__init__.py": "23740a275d63afa28a0f111d5dc699dc48ba3bf5fc8184d22e5d0b1ef9ba2188",
+    "dispatch_eta/__main__.py": "f1065cf7eeb8179d02f9726bee43d56acf21fe406c5f546ed221434a80c5fea0",
+    "dispatch_eta/data.py": "d1a4f1079bb92829b5816711fe70c796dbd71e29f3aff9f75f197446a54f4747",
+    "dispatch_eta/evaluate.py": "1c189a81fe249742df2ed14c3b8bb8a20d4f98dd9a111f48ec8474364bb932c3",
+    "dispatch_eta/experiment.py": "36b2c084f630d4cc72e46a566487ab3cb231b469ef96580e806ea7b5aeae2f23",
+    "dispatch_eta/intervals.py": "46d5ba2850c980bcb2c63bfc4dfefcb1cb4124a9d8ab27e4a6d5ddbabd07b5ee",
+    "dispatch_eta/report.py": "f7734350e3b35a8c8cd0a66c5c025865b6b85c43bd63d95b7915153502536f1d",
+    "requirements.txt": "b8580a4654079e99a969a4b32ccd7dc64aff910eab4b0d1d16accb72dab6d445",
+    "tests/test_contracts.py": "e350ce37f1367c5020cdcb7a56acba5258aaabc568a946af8c8d32fe289b85e2"
+  },
+  "test": {
+    "linear": {
+      "all": {
+        "coverage": 0.5705555555555556,
+        "covered": 1027,
+        "interval_status": "finite",
+        "lower_misses": 36,
+        "mae_minutes": 7.499047864375038,
+        "mean_interval_width_minutes": 14.663401814895737,
+        "mean_signed_error_minutes": -5.773177313371725,
+        "n": 1800,
+        "point_promise": {
+          "mean_late_minutes": 6.63611258887338,
+          "mean_loss_units": 27.40738563099518,
+          "mean_slack_minutes": 0.8629352755016569,
+          "miss_rate": 0.7266666666666667,
+          "missed_promises": 1308,
+          "n": 1800,
+          "status": "ok"
+        },
+        "rmse_minutes": 9.677462810953955,
+        "underestimate_over_10_minutes_count": 516,
+        "underestimate_over_10_minutes_rate": 0.2866666666666667,
+        "upper_misses": 737,
+        "upper_promise": {
+          "mean_late_minutes": 2.484683283816275,
+          "mean_loss_units": 14.009096573326309,
+          "mean_slack_minutes": 4.070363438061209,
+          "miss_rate": 0.40944444444444444,
+          "missed_promises": 737,
+          "n": 1800,
+          "status": "ok"
+        }
+      },
+      "before_shift": {
+        "coverage": 0.8955555555555555,
+        "covered": 806,
+        "interval_status": "finite",
+        "lower_misses": 36,
+        "mae_minutes": 3.476115234966472,
+        "mean_interval_width_minutes": 14.65887848044441,
+        "mean_signed_error_minutes": -0.04437453646825201,
+        "n": 900,
+        "point_promise": {
+          "mean_late_minutes": 1.7602448857173618,
+          "mean_loss_units": 8.75684989211856,
+          "mean_slack_minutes": 1.7158703492491103,
+          "miss_rate": 0.46,
+          "missed_promises": 414,
+          "n": 900,
+          "status": "ok"
+        },
+        "rmse_minutes": 4.558213413931059,
+        "underestimate_over_10_minutes_count": 24,
+        "underestimate_over_10_minutes_rate": 0.02666666666666667,
+        "upper_misses": 58,
+        "upper_promise": {
+          "mean_late_minutes": 0.1831790541715541,
+          "mean_loss_units": 8.230378202006177,
+          "mean_slack_minutes": 7.497661985319961,
+          "miss_rate": 0.06444444444444444,
+          "missed_promises": 58,
+          "n": 900,
+          "status": "ok"
+        }
+      },
+      "mechanism_shift": {
+        "coverage": 0.24555555555555555,
+        "covered": 221,
+        "interval_status": "finite",
+        "lower_misses": 0,
+        "mae_minutes": 11.521980493783605,
+        "mean_interval_width_minutes": 14.667925149347065,
+        "mean_signed_error_minutes": -11.501980090275199,
+        "n": 900,
+        "point_promise": {
+          "mean_late_minutes": 11.511980292029401,
+          "mean_loss_units": 46.057921369871806,
+          "mean_slack_minutes": 0.010000201754203705,
+          "miss_rate": 0.9933333333333333,
+          "missed_promises": 894,
+          "n": 900,
+          "status": "ok"
+        },
+        "rmse_minutes": 12.904621783990907,
+        "underestimate_over_10_minutes_count": 492,
+        "underestimate_over_10_minutes_rate": 0.5466666666666666,
+        "upper_misses": 679,
+        "upper_promise": {
+          "mean_late_minutes": 4.786187513460996,
+          "mean_loss_units": 19.787814944646446,
+          "mean_slack_minutes": 0.6430648908024583,
+          "miss_rate": 0.7544444444444445,
+          "missed_promises": 679,
+          "n": 900,
+          "status": "ok"
+        }
+      },
+      "off_peak": {
+        "coverage": 0.6149606299212599,
+        "covered": 781,
+        "interval_status": "finite",
+        "lower_misses": 18,
+        "mae_minutes": 6.727895217710431,
+        "mean_interval_width_minutes": 14.64073570955801,
+        "mean_signed_error_minutes": -5.095460927314029,
+        "n": 1270,
+        "point_promise": {
+          "mean_late_minutes": 5.911678072512229,
+          "mean_loss_units": 24.462929435247123,
+          "mean_slack_minutes": 0.8162171451982013,
+          "miss_rate": 0.7204724409448819,
+          "missed_promises": 915,
+          "n": 1270,
+          "status": "ok"
+        },
+        "rmse_minutes": 8.705592852664047,
+        "underestimate_over_10_minutes_count": 293,
+        "underestimate_over_10_minutes_rate": 0.23070866141732282,
+        "upper_misses": 471,
+        "upper_promise": {
+          "mean_late_minutes": 1.9161042949484246,
+          "mean_loss_units": 11.843918015044753,
+          "mean_slack_minutes": 4.179500835251055,
+          "miss_rate": 0.37086614173228344,
+          "missed_promises": 471,
+          "n": 1270,
+          "status": "ok"
+        }
+      },
+      "rush_hour": {
+        "coverage": 0.4641509433962264,
+        "covered": 246,
+        "interval_status": "finite",
+        "lower_misses": 18,
+        "mae_minutes": 9.34690420638268,
+        "mean_interval_width_minutes": 14.717714935233316,
+        "mean_signed_error_minutes": -7.397139219585448,
+        "n": 530,
+        "point_promise": {
+          "mean_late_minutes": 8.372021712984063,
+          "mean_loss_units": 34.46296934533487,
+          "mean_slack_minutes": 0.9748824933986161,
+          "miss_rate": 0.7415094339622641,
+          "missed_promises": 393,
+          "n": 530,
+          "status": "ok"
+        },
+        "rmse_minutes": 11.681785938636219,
+        "underestimate_over_10_minutes_count": 223,
+        "underestimate_over_10_minutes_rate": 0.4207547169811321,
+        "upper_misses": 266,
+        "upper_promise": {
+          "mean_late_minutes": 3.8471272760090485,
+          "mean_loss_units": 19.197354628076454,
+          "mean_slack_minutes": 3.8088455240402603,
+          "miss_rate": 0.5018867924528302,
+          "missed_promises": 266,
+          "n": 530,
+          "status": "ok"
+        }
+      },
+      "shift_zone_core": {
+        "coverage": 0.380327868852459,
+        "covered": 116,
+        "interval_status": "finite",
+        "lower_misses": 0,
+        "mae_minutes": 9.270004982483186,
+        "mean_interval_width_minutes": 14.673629273723346,
+        "mean_signed_error_minutes": -9.229681393818728,
+        "n": 305,
+        "point_promise": {
+          "mean_late_minutes": 9.249843188150956,
+          "mean_loss_units": 37.01953454693606,
+          "mean_slack_minutes": 0.02016179433222923,
+          "miss_rate": 0.9934426229508196,
+          "missed_promises": 303,
+          "n": 305,
+          "status": "ok"
+        },
+        "rmse_minutes": 10.53906998450487,
+        "underestimate_over_10_minutes_count": 113,
+        "underestimate_over_10_minutes_rate": 0.3704918032786885,
+        "upper_misses": 189,
+        "upper_promise": {
+          "mean_late_minutes": 2.8967453272603954,
+          "mean_loss_units": 12.612902710099906,
+          "mean_slack_minutes": 1.0259214010583255,
+          "miss_rate": 0.6196721311475409,
+          "missed_promises": 189,
+          "n": 305,
+          "status": "ok"
+        }
+      },
+      "shift_zone_hills": {
+        "coverage": 0.0196078431372549,
+        "covered": 6,
+        "interval_status": "finite",
+        "lower_misses": 0,
+        "mae_minutes": 16.35278109860489,
+        "mean_interval_width_minutes": 14.686894714059385,
+        "mean_signed_error_minutes": -16.35278109860489,
+        "n": 306,
+        "point_promise": {
+          "mean_late_minutes": 16.35278109860489,
+          "mean_loss_units": 65.41112439441956,
+          "mean_slack_minutes": 0.0,
+          "miss_rate": 1.0,
+          "missed_promises": 306,
+          "n": 306,
+          "status": "ok"
+        },
+        "rmse_minutes": 17.103493409734615,
+        "underestimate_over_10_minutes_count": 276,
+        "underestimate_over_10_minutes_rate": 0.9019607843137255,
+        "upper_misses": 300,
+        "upper_promise": {
+          "mean_late_minutes": 9.032872250754595,
+          "mean_loss_units": 36.17043762278476,
+          "mean_slack_minutes": 0.03894861976636774,
+          "miss_rate": 0.9803921568627451,
+          "missed_promises": 300,
+          "n": 306,
+          "status": "ok"
+        }
+      },
+      "shift_zone_suburban": {
+        "coverage": 0.34256055363321797,
+        "covered": 99,
+        "interval_status": "finite",
+        "lower_misses": 0,
+        "mae_minutes": 8.783667503718947,
+        "mean_interval_width_minutes": 14.641819804237256,
+        "mean_signed_error_minutes": -8.763938546573941,
+        "n": 289,
+        "point_promise": {
+          "mean_late_minutes": 8.773803025146444,
+          "mean_loss_units": 35.10507657915828,
+          "mean_slack_minutes": 0.009864478572503176,
+          "miss_rate": 0.986159169550173,
+          "missed_promises": 285,
+          "n": 289,
+          "status": "ok"
+        },
+        "rmse_minutes": 9.573130516843227,
+        "underestimate_over_10_minutes_count": 103,
+        "underestimate_over_10_minutes_rate": 0.356401384083045,
+        "upper_misses": 190,
+        "upper_promise": {
+          "mean_late_minutes": 2.283745773597125,
+          "mean_loss_units": 10.013647789028344,
+          "mean_slack_minutes": 0.8786646946398435,
+          "miss_rate": 0.657439446366782,
+          "missed_promises": 190,
+          "n": 289,
+          "status": "ok"
+        }
+      },
+      "zone_core": {
+        "coverage": 0.654300168634064,
+        "covered": 388,
+        "interval_status": "finite",
+        "lower_misses": 3,
+        "mae_minutes": 6.213950483410165,
+        "mean_interval_width_minutes": 14.652729779964236,
+        "mean_signed_error_minutes": -4.7668882038201525,
+        "n": 593,
+        "point_promise": {
+          "mean_late_minutes": 5.49041934361516,
+          "mean_loss_units": 22.685208514255645,
+          "mean_slack_minutes": 0.723531139795006,
+          "miss_rate": 0.7318718381112985,
+          "missed_promises": 434,
+          "n": 593,
+          "status": "ok"
+        },
+        "rmse_minutes": 8.031826251856604,
+        "underestimate_over_10_minutes_count": 117,
+        "underestimate_over_10_minutes_rate": 0.1973018549747049,
+        "upper_misses": 202,
+        "upper_promise": {
+          "mean_late_minutes": 1.543192078750743,
+          "mean_loss_units": 10.30792965755022,
+          "mean_slack_minutes": 4.135161342547248,
+          "miss_rate": 0.3406408094435076,
+          "missed_promises": 202,
+          "n": 593,
+          "status": "ok"
+        }
+      },
+      "zone_hills": {
+        "coverage": 0.41225165562913907,
+        "covered": 249,
+        "interval_status": "finite",
+        "lower_misses": 23,
+        "mae_minutes": 10.407379516508998,
+        "mean_interval_width_minutes": 14.691298532268732,
+        "mean_signed_error_minutes": -8.464520881206417,
+        "n": 604,
+        "point_promise": {
+          "mean_late_minutes": 9.435950198857707,
+          "mean_loss_units": 38.715230113082114,
+          "mean_slack_minutes": 0.9714293176512914,
+          "miss_rate": 0.7632450331125827,
+          "missed_promises": 461,
+          "n": 604,
+          "status": "ok"
+        },
+        "rmse_minutes": 12.767680350995594,
+        "underestimate_over_10_minutes_count": 289,
+        "underestimate_over_10_minutes_rate": 0.478476821192053,
+        "upper_misses": 332,
+        "upper_promise": {
+          "mean_late_minutes": 4.724447464914141,
+          "mean_loss_units": 22.51657391098095,
+          "mean_slack_minutes": 3.6187840513243836,
+          "miss_rate": 0.5496688741721855,
+          "missed_promises": 332,
+          "n": 604,
+          "status": "ok"
+        }
+      },
+      "zone_suburban": {
+        "coverage": 0.6467661691542289,
+        "covered": 390,
+        "interval_status": "finite",
+        "lower_misses": 10,
+        "mae_minutes": 5.849678758277618,
+        "mean_interval_width_minutes": 14.645953886904186,
+        "mean_signed_error_minutes": -4.066971553822682,
+        "n": 603,
+        "point_promise": {
+          "mean_late_minutes": 4.958325156050151,
+          "mean_loss_units": 20.724654226428072,
+          "mean_slack_minutes": 0.8913536022274687,
+          "miss_rate": 0.6849087893864013,
+          "missed_promises": 413,
+          "n": 603,
+          "status": "ok"
+        },
+        "rmse_minutes": 7.268950291201906,
+        "underestimate_over_10_minutes_count": 110,
+        "underestimate_over_10_minutes_rate": 0.1824212271973466,
+        "upper_misses": 203,
+        "upper_promise": {
+          "mean_late_minutes": 1.1670824865040843,
+          "mean_loss_units": 9.127298346314399,
+          "mean_slack_minutes": 4.458968400298061,
+          "miss_rate": 0.33665008291873966,
+          "missed_promises": 203,
+          "n": 603,
+          "status": "ok"
+        }
+      }
+    },
+    "xgboost": {
+      "all": {
+        "coverage": 0.4955555555555556,
+        "covered": 892,
+        "interval_status": "finite",
+        "lower_misses": 28,
+        "mae_minutes": 7.196460692612661,
+        "mean_interval_width_minutes": 11.049822869140625,
+        "mean_signed_error_minutes": -5.938552589228634,
+        "n": 1800,
+        "point_promise": {
+          "mean_late_minutes": 6.567506640920646,
+          "mean_loss_units": 26.898980615374604,
+          "mean_slack_minutes": 0.6289540516920131,
+          "miss_rate": 0.7416666666666667,
+          "missed_promises": 1335,
+          "n": 1800,
+          "status": "ok"
+        },
+        "rmse_minutes": 9.498824843632391,
+        "underestimate_over_10_minutes_count": 503,
+        "underestimate_over_10_minutes_rate": 0.27944444444444444,
+        "upper_misses": 880,
+        "upper_promise": {
+          "mean_late_minutes": 3.278592239384172,
+          "mean_loss_units": 15.979320042262538,
+          "mean_slack_minutes": 2.8649510847258512,
+          "miss_rate": 0.4888888888888889,
+          "missed_promises": 880,
+          "n": 1800,
+          "status": "ok"
+        }
+      },
+      "before_shift": {
+        "coverage": 0.9022222222222223,
+        "covered": 812,
+        "interval_status": "finite",
+        "lower_misses": 28,
+        "mae_minutes": 2.6211626062700057,
+        "mean_interval_width_minutes": 11.049822869140625,
+        "mean_signed_error_minutes": -0.10866100260687936,
+        "n": 900,
+        "point_promise": {
+          "mean_late_minutes": 1.3649118044384427,
+          "mean_loss_units": 6.7158980195853335,
+          "mean_slack_minutes": 1.2562508018315632,
+          "miss_rate": 0.48444444444444446,
+          "missed_promises": 436,
+          "n": 900,
+          "status": "ok"
+        },
+        "rmse_minutes": 3.553761604005892,
+        "underestimate_over_10_minutes_count": 21,
+        "underestimate_over_10_minutes_rate": 0.023333333333333334,
+        "upper_misses": 60,
+        "upper_promise": {
+          "mean_late_minutes": 0.216091007738444,
+          "mean_loss_units": 6.4967054706556535,
+          "mean_slack_minutes": 5.632341439701878,
+          "miss_rate": 0.06666666666666667,
+          "missed_promises": 60,
+          "n": 900,
+          "status": "ok"
+        }
+      },
+      "mechanism_shift": {
+        "coverage": 0.08888888888888889,
+        "covered": 80,
+        "interval_status": "finite",
+        "lower_misses": 0,
+        "mae_minutes": 11.771758778955316,
+        "mean_interval_width_minutes": 11.049822869140625,
+        "mean_signed_error_minutes": -11.768444175850389,
+        "n": 900,
+        "point_promise": {
+          "mean_late_minutes": 11.770101477402854,
+          "mean_loss_units": 47.08206321116387,
+          "mean_slack_minutes": 0.0016573015524631056,
+          "miss_rate": 0.9988888888888889,
+          "missed_promises": 899,
+          "n": 900,
+          "status": "ok"
+        },
+        "rmse_minutes": 12.954772297570859,
+        "underestimate_over_10_minutes_count": 482,
+        "underestimate_over_10_minutes_rate": 0.5355555555555556,
+        "upper_misses": 820,
+        "upper_promise": {
+          "mean_late_minutes": 6.3410934710299,
+          "mean_loss_units": 25.46193461386942,
+          "mean_slack_minutes": 0.09756072974982377,
+          "miss_rate": 0.9111111111111111,
+          "missed_promises": 820,
+          "n": 900,
+          "status": "ok"
+        }
+      },
+      "off_peak": {
+        "coverage": 0.5228346456692914,
+        "covered": 664,
+        "interval_status": "finite",
+        "lower_misses": 10,
+        "mae_minutes": 6.424983721114247,
+        "mean_interval_width_minutes": 11.049822869140627,
+        "mean_signed_error_minutes": -5.281986954317997,
+        "n": 1270,
+        "point_promise": {
+          "mean_late_minutes": 5.853485337716122,
+          "mean_loss_units": 23.985439734262613,
+          "mean_slack_minutes": 0.5714983833981251,
+          "miss_rate": 0.7377952755905511,
+          "missed_promises": 937,
+          "n": 1270,
+          "status": "ok"
+        },
+        "rmse_minutes": 8.503145719407968,
+        "underestimate_over_10_minutes_count": 280,
+        "underestimate_over_10_minutes_rate": 0.2204724409448819,
+        "upper_misses": 596,
+        "upper_promise": {
+          "mean_late_minutes": 2.63479935726388,
+          "mean_loss_units": 13.416921266571716,
+          "mean_slack_minutes": 2.8777238375161964,
+          "miss_rate": 0.4692913385826772,
+          "missed_promises": 596,
+          "n": 1270,
+          "status": "ok"
+        }
+      },
+      "rush_hour": {
+        "coverage": 0.43018867924528303,
+        "covered": 228,
+        "interval_status": "finite",
+        "lower_misses": 18,
+        "mae_minutes": 9.045094190354144,
+        "mean_interval_width_minutes": 11.049822869140627,
+        "mean_signed_error_minutes": -7.511832506844691,
+        "n": 530,
+        "point_promise": {
+          "mean_late_minutes": 8.278463348599416,
+          "mean_loss_units": 33.88048423615239,
+          "mean_slack_minutes": 0.7666308417547263,
+          "miss_rate": 0.7509433962264151,
+          "missed_promises": 398,
+          "n": 530,
+          "status": "ok"
+        },
+        "rmse_minutes": 11.540280848144508,
+        "underestimate_over_10_minutes_count": 223,
+        "underestimate_over_10_minutes_rate": 0.4207547169811321,
+        "upper_misses": 284,
+        "upper_promise": {
+          "mean_late_minutes": 4.821265749370531,
+          "mean_loss_units": 22.11940767457828,
+          "mean_slack_minutes": 2.834344677096155,
+          "miss_rate": 0.5358490566037736,
+          "missed_promises": 284,
+          "n": 530,
+          "status": "ok"
+        }
+      },
+      "shift_zone_core": {
+        "coverage": 0.13114754098360656,
+        "covered": 40,
+        "interval_status": "finite",
+        "lower_misses": 0,
+        "mae_minutes": 9.499306333534415,
+        "mean_interval_width_minutes": 11.049822869140627,
+        "mean_signed_error_minutes": -9.499306333534415,
+        "n": 305,
+        "point_promise": {
+          "mean_late_minutes": 9.499306333534415,
+          "mean_loss_units": 37.99722533413766,
+          "mean_slack_minutes": 0.0,
+          "miss_rate": 1.0,
+          "missed_promises": 305,
+          "n": 305,
+          "status": "ok"
+        },
+        "rmse_minutes": 10.312404647060696,
+        "underestimate_over_10_minutes_count": 111,
+        "underestimate_over_10_minutes_rate": 0.3639344262295082,
+        "upper_misses": 265,
+        "upper_promise": {
+          "mean_late_minutes": 4.127144161815305,
+          "mean_loss_units": 16.66132591011242,
+          "mean_slack_minutes": 0.15274926285120244,
+          "miss_rate": 0.8688524590163934,
+          "missed_promises": 265,
+          "n": 305,
+          "status": "ok"
+        }
+      },
+      "shift_zone_hills": {
+        "coverage": 0.006535947712418301,
+        "covered": 2,
+        "interval_status": "finite",
+        "lower_misses": 0,
+        "mae_minutes": 17.04153375878188,
+        "mean_interval_width_minutes": 11.049822869140627,
+        "mean_signed_error_minutes": -17.04153375878188,
+        "n": 306,
+        "point_promise": {
+          "mean_late_minutes": 17.04153375878188,
+          "mean_loss_units": 68.16613503512752,
+          "mean_slack_minutes": 0.0,
+          "miss_rate": 1.0,
+          "missed_promises": 306,
+          "n": 306,
+          "status": "ok"
+        },
+        "rmse_minutes": 17.586860242648193,
+        "underestimate_over_10_minutes_count": 290,
+        "underestimate_over_10_minutes_rate": 0.9477124183006536,
+        "upper_misses": 304,
+        "upper_promise": {
+          "mean_late_minutes": 11.5208952094184,
+          "mean_loss_units": 46.087853722880446,
+          "mean_slack_minutes": 0.004272885206833379,
+          "miss_rate": 0.9934640522875817,
+          "missed_promises": 304,
+          "n": 306,
+          "status": "ok"
+        }
+      },
+      "shift_zone_suburban": {
+        "coverage": 0.1314878892733564,
+        "covered": 38,
+        "interval_status": "finite",
+        "lower_misses": 0,
+        "mae_minutes": 8.590259997039901,
+        "mean_interval_width_minutes": 11.049822869140627,
+        "mean_signed_error_minutes": -8.579937703633556,
+        "n": 289,
+        "point_promise": {
+          "mean_late_minutes": 8.585098850336728,
+          "mean_loss_units": 34.345556548050084,
+          "mean_slack_minutes": 0.005161146703172301,
+          "miss_rate": 0.9965397923875432,
+          "missed_promises": 288,
+          "n": 289,
+          "status": "ok"
+        },
+        "rmse_minutes": 9.105873906893137,
+        "underestimate_over_10_minutes_count": 81,
+        "underestimate_over_10_minutes_rate": 0.28027681660899656,
+        "upper_misses": 251,
+        "upper_promise": {
+          "mean_late_minutes": 3.193118410004189,
+          "mean_loss_units": 12.910565780957704,
+          "mean_slack_minutes": 0.13809214094094682,
+          "miss_rate": 0.8685121107266436,
+          "missed_promises": 251,
+          "n": 289,
+          "status": "ok"
+        }
+      },
+      "zone_core": {
+        "coverage": 0.5278246205733558,
+        "covered": 313,
+        "interval_status": "finite",
+        "lower_misses": 1,
+        "mae_minutes": 5.965551316771535,
+        "mean_interval_width_minutes": 11.049822869140627,
+        "mean_signed_error_minutes": -4.992787814641892,
+        "n": 593,
+        "point_promise": {
+          "mean_late_minutes": 5.479169565706713,
+          "mean_loss_units": 22.403060013891675,
+          "mean_slack_minutes": 0.4863817510648215,
+          "miss_rate": 0.7453625632377741,
+          "missed_promises": 442,
+          "n": 593,
+          "status": "ok"
+        },
+        "rmse_minutes": 7.707248559228227,
+        "underestimate_over_10_minutes_count": 117,
+        "underestimate_over_10_minutes_rate": 0.1973018549747049,
+        "upper_misses": 279,
+        "upper_promise": {
+          "mean_late_minutes": 2.208984104772815,
+          "mean_loss_units": 11.577044143792495,
+          "mean_slack_minutes": 2.741107724701237,
+          "miss_rate": 0.47048903878583476,
+          "missed_promises": 279,
+          "n": 593,
+          "status": "ok"
+        }
+      },
+      "zone_hills": {
+        "coverage": 0.4105960264900662,
+        "covered": 248,
+        "interval_status": "finite",
+        "lower_misses": 18,
+        "mae_minutes": 10.2548445184118,
+        "mean_interval_width_minutes": 11.049822869140627,
+        "mean_signed_error_minutes": -8.982253001453323,
+        "n": 604,
+        "point_promise": {
+          "mean_late_minutes": 9.618548759932562,
+          "mean_loss_units": 39.11049079820948,
+          "mean_slack_minutes": 0.6362957584792382,
+          "miss_rate": 0.7897350993377483,
+          "missed_promises": 477,
+          "n": 604,
+          "status": "ok"
+        },
+        "rmse_minutes": 12.873906962693669,
+        "underestimate_over_10_minutes_count": 300,
+        "underestimate_over_10_minutes_rate": 0.4966887417218543,
+        "upper_misses": 338,
+        "upper_promise": {
+          "mean_late_minutes": 6.002749489658583,
+          "mean_loss_units": 26.5564058814099,
+          "mean_slack_minutes": 2.545407922775572,
+          "miss_rate": 0.5596026490066225,
+          "missed_promises": 338,
+          "n": 604,
+          "status": "ok"
+        }
+      },
+      "zone_suburban": {
+        "coverage": 0.548922056384743,
+        "covered": 331,
+        "interval_status": "finite",
+        "lower_misses": 9,
+        "mae_minutes": 5.343501205201562,
+        "mean_interval_width_minutes": 11.049822869140625,
+        "mean_signed_error_minutes": -3.819885030930502,
+        "n": 603,
+        "point_promise": {
+          "mean_late_minutes": 4.581693118066031,
+          "mean_loss_units": 19.088580559399656,
+          "mean_slack_minutes": 0.76180808713553,
+          "miss_rate": 0.6898839137645107,
+          "missed_promises": 416,
+          "n": 603,
+          "status": "ok"
+        },
+        "rmse_minutes": 6.701300271820862,
+        "underestimate_over_10_minutes_count": 86,
+        "underestimate_over_10_minutes_rate": 0.14262023217247097,
+        "upper_misses": 263,
+        "upper_promise": {
+          "mean_late_minutes": 1.601787338320806,
+          "mean_loss_units": 9.713963095243843,
+          "mean_slack_minutes": 3.3068137419606174,
+          "miss_rate": 0.4361525704809287,
+          "missed_promises": 263,
+          "n": 603,
+          "status": "ok"
+        }
+      }
+    }
+  }
+}

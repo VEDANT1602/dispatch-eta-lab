@@ -84,21 +84,21 @@ def render(output):
     relative = lambda path: Path(os.path.relpath(ROOT / path, output)).as_posix()
     candidate = overall["xgboost"]
     cal = metrics["calibration"]["xgboost"]
-    report = f'''# Dispatch ETA Lab: the promise is a decision
+    report = f'''# Dispatch ETA under an abrupt change in delivery times
 
-**Decision: Keep this as an offline protocol audit. Point error, interval coverage and promise loss require separate acceptance criteria.**
+A model can predict typical delivery time accurately and still quote an unreliable arrival window when routes slow down. This experiment compares point forecasts, interval coverage and the cost of two ways to set a promise.
 
 This is original independent work by Vedant Thaker. Every delivery is fictional. No Uber, DoorDash, Instacart, employer or customer data, code, benchmark result or production claim is used as this experiment's evidence.
 
-## The topic, then the narrower question
+## Two promises for the same delivery
 
-An ETA is a regression output, but a displayed delivery promise is an operational commitment. I wanted to test whether a tree model improves a simple baseline and whether its uncertainty still describes the cases where a promise matters: rush hour, different service zones and a changed delivery mechanism.
+For each held-out delivery, one policy displays the point estimate and the other displays the upper endpoint of its calibrated interval. The evaluation counts how often each promise is missed, how late it is and how much extra time customers would have been quoted on early deliveries.
 
-## The usual workflow and the issue I chose to expose
+## What changes after calibration
 
-It is easy to fit a model, report one average error and turn every prediction into a promise. That hides late arrivals behind early ones, obscures who receives wide intervals, and can let future route/courier information enter an apparently clean test. An uncertainty interval adds another failure mode: its familiar nominal level can sound like a guarantee even when calibration and future deliveries are no longer exchangeable.
+The final period introduces a delivery-time shift after calibration. A single average over the entire test period masks when the promised interval stopped covering arrivals. Before-shift and during-shift rows keep that failure visible.
 
-## My framework: clock, estimate, calibrate, promise, audit
+## Training window, calibration window and promise policy
 
 1. **Clock:** use known-at-dispatch inputs. Keep route/courier identities disjoint between train, calibration and test; exclude identities, absolute day, shift flags, outcomes and completion fields from features. Leave two-day gaps and require earlier labels to be available before the next partition.
 2. **Estimate:** fit OLS and an actual CPU XGBoost regressor on the same training rows and feature columns. Parameters are fixed before the run; neither calibration nor test labels select a model or stop boosting.
@@ -106,7 +106,7 @@ It is easy to fit a model, report one average error and turn every prediction in
 4. **Promise:** compare displaying the point estimate with displaying the interval's upper endpoint. Count missed promises, mean late minutes and extra promise slack. Use predeclared illustrative loss weights of four per late minute and one per slack minute.
 5. **Audit:** keep all test predictions and show the original/shifted periods and service-zone/rush-hour slices. The shift flag is an analysis label, never a predictor or a trigger available to a deployed policy.
 
-## Actual executed result
+## Forecast errors by period and service zone
 
 The generated stream contains {metrics["dataset"]["rows"]} events. The train/calibration/test counts are {metrics["counts"]["train"]}/{metrics["counts"]["calibration"]}/{metrics["counts"]["test"]}; {metrics["counts"]["embargo_excluded"]} events fall in excluded gap days.
 
@@ -122,7 +122,7 @@ Before the declared shift, XGBoost coverage is {number(candidate["before_shift"]
 
 ![Coverage audit](coverage.svg)
 
-## The decision layer makes the tradeoff visible
+## Cost of lateness and slack
 
 | Model and promise policy | Missed promises / deliveries | Mean late minutes | Mean slack minutes | Mean illustrative loss units |
 | --- | ---: | ---: | ---: | ---: |
@@ -132,9 +132,9 @@ Late and slack minutes are averaged over all evaluated deliveries, including zer
 
 {comparison_summary(metrics)}
 
-## The tradeoff and next action
+## Applying the result to a delivery service
 
-Trees can capture interactions that a linear baseline misses. Calibration makes one uncertainty assumption inspectable; it does not repair a changed process. I would next test multiple predeclared time windows and seeds on authorized representative data, observe actual feature/label arrival times, and choose a promise-loss function with the operator. A monitored shadow rollout would compare interval misses and slack by group before a customer sees a new promise. Any recalibration policy needs fresh past-only labels and its own predeclared evaluation.
+A real promise policy would need delivery outcomes from multiple time windows, the actual arrival time of each feature and label, and an operator-defined cost for lateness versus slack. Before changing a displayed ETA, a shadow evaluation could measure those two costs per service zone and rush-hour window. Any revised calibration rule would need past-only labels and a fresh holdout.
 
 ## Reproduce and challenge
 

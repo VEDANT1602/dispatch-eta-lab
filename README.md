@@ -1,18 +1,8 @@
 # Dispatch ETA Lab
 
-**A better point estimate can still make a worse delivery promise.**
+Before the simulated disruption, the XGBoost interval covered 812 of 900 deliveries. After an unobserved delay was introduced, it covered 80 of the next 900. The calibration radius stayed fixed. A dispatcher relying on the nominal 90% interval would have missed the change. [Prediction rows](reports/predictions.csv) · [Coverage by period](reports/metrics.json)
 
-I built this original CPU experiment to connect regression quality with an operational decision: how much time should a fictional dispatch service promise? An actual XGBoost regressor competes with a fitted linear baseline. Separate past-only residuals calibrate intervals. A declared disruption then tests whether those intervals still describe the future.
-
-The result keeps the difficult part visible: XGBoost's pre-shift average error is smaller, but its narrower calibrated interval fails badly after the mechanism changes. Under the predeclared simulation weights, the linear upper-endpoint promise has lower loss on the complete test stream. This is a useful boundary to discover before a customer sees a promise.
-
-**Original independent portfolio work by Vedant Thaker, November 5, 2026.** All deliveries, routes, couriers, service zones and outcomes are synthetic. This is not Uber, DoorDash, Instacart, employer or customer data, and it does not validate any historical job metric.
-
-## Start with the engineering story
-
-- [Executed case study](reports/case-study.md): narrow problem, ordinary workflow, failure mode, framework, result, tradeoff and next action.
-- [Metrics and source hashes](reports/metrics.json), [every held-out prediction](reports/predictions.csv), and [the exact synthetic dataset](reports/data/deliveries.csv.gz).
-- [Data card](data/DATA_CARD.md) and [protocol/method references](docs/protocol.md).
+The experiment compares a linear model and XGBoost using only information known at dispatch. It then scores two promises: the point estimate and the upper end of the interval. The linear upper-endpoint policy had the lowest loss on the complete synthetic test stream under the stated late-minute and slack-minute costs. [Case study](reports/case-study.md) · [Calibration protocol](docs/protocol.md) · [Synthetic data](reports/data/deliveries.csv.gz)
 
 ![Observed interval coverage](reports/coverage.svg)
 
@@ -75,6 +65,6 @@ A pinned [GitHub Actions workflow](.github/workflows/verify.yml) runs the tests 
 
 ## Inspiration and rights
 
-The [user-supplied LinkedIn post](https://www.linkedin.com/posts/andresvourakis_xgboost-and-similar-tree-based-models-are-share-7523776256539029505-auas/) supplied the topic direction. [Uber's 2019 engineering article](https://www.uber.com/us/en/blog/productionizing-distributed-xgboost/) provides a primary historical example of XGBoost applied to ETA estimation at a very different scale. This project does not replicate that architecture or claim to describe Uber's current stack. No post/article code, company dataset, result number or diagram is copied.
+The [discussion by Andres Vourakis](https://www.linkedin.com/posts/andresvourakis_xgboost-and-similar-tree-based-models-are-share-7523776256539029505-auas/) motivated the choice of tree models. [Uber's 2019 engineering article](https://www.uber.com/us/en/blog/productionizing-distributed-xgboost/) provides a primary historical example of XGBoost applied to ETA estimation at a very different scale. This project does not replicate that architecture or claim to describe Uber's current stack. No post/article code, company dataset, result number or diagram is copied.
 
 The statistical method is credited to [Lei et al., Distribution-Free Predictive Inference for Regression](https://arxiv.org/abs/1604.04173); API references and the assumptions are recorded in [the protocol](docs/protocol.md). Original code, fictional data and reports are released under the [MIT license](LICENSE). Dependencies retain their own licenses.

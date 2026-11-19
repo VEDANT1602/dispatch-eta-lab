@@ -28,7 +28,7 @@ The saved model/interval results are empirical for one constructed dataset and t
 
 ## Primary sources and conceptual credit
 
-- [User-supplied LinkedIn post by Andres Vourakis](https://www.linkedin.com/posts/andresvourakis_xgboost-and-similar-tree-based-models-are-share-7523776256539029505-auas/): topic inspiration supplied by the user. Its full text was not accessible to the browsing tool; no quotation or unverified company-specific claim is drawn from it.
+- Andres Vourakis’s [discussion of tree models](https://www.linkedin.com/posts/andresvourakis_xgboost-and-similar-tree-based-models-are-share-7523776256539029505-auas/) motivated the project topic. The ETA results above come from this repository’s fictional delivery stream.
 - [Uber Engineering, Productionizing Distributed XGBoost to Train Deep Tree Models with Large Data Sets at Uber, December 10, 2019](https://www.uber.com/us/en/blog/productionizing-distributed-xgboost/): historical evidence of tree-based ETA work. It motivates the engineering question, not this project's data, scale, design or performance claims. No distributed-training claim is made here.
 - [XGBoost Python API](https://xgboost.readthedocs.io/en/stable/python/python_api.html#xgboost.XGBRegressor) and [parameters](https://xgboost.readthedocs.io/en/stable/parameter.html): public APIs used for squared-error CPU histogram regression. Tested package version is pinned to 3.1.2; documentation may track a newer release.
 - [XGBoost installation guide](https://xgboost.readthedocs.io/en/stable/install.html#minimal-installation-cpu-only) and [official xgboost-cpu 3.1.2 package](https://pypi.org/project/xgboost-cpu/3.1.2/): CPU-only Linux x86_64 installation path used by the workflow, avoiding unnecessary GPU dependencies.
